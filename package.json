@@ -18,7 +18,7 @@
   },
   "scripts": {
     "api:start": "docker-compose pull && docker-compose up -d",
-    "api:stop": "docker-compose stop && docker-compose down -rmi",
+    "api:stop": "docker-compose stop",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
