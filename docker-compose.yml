@@ -1,0 +1,5 @@
+services:
+  api:
+    image: emahnovets/menu-app-api
+    ports:
+      - "3000:3000"
