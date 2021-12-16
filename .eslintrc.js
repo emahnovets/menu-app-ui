@@ -43,7 +43,10 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
 
-    'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
+    'react/jsx-filename-extension': [
+      1,
+      { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
+    ],
     'react/function-component-definition': [
       'error',
       {
@@ -61,7 +64,7 @@ module.exports = {
     'import/resolver': {
       node: {
         paths: ['src'],
-        extensions: ['.ts', '.tsx'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
       },
     },
   },
