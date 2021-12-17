@@ -1,5 +1,5 @@
 import TextField from '@mui/material/TextField';
-import { Container } from 'components/menu-items-list/menu-items-list.styles';
+import { Container } from 'components/search/search.styles';
 import { ChangeEvent, useCallback } from 'react';
 
 interface SearchProps {
