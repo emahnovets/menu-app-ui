@@ -1,8 +1,16 @@
+import { Container } from 'components/menu-items-list/menu-items-list.styles';
 import { MENU_ITEMS_QUERY } from 'consts/queries.consts';
 import { fetchMenuItems } from 'queries/fetch-menu-items';
 import { useQuery } from 'react-query';
+import { MenuItem } from 'types/menu-item.interface';
 
-export const MenuItemsList = () => {
+interface MenuItemsListProps {
+  menuItemComponent: React.FC<{ menuItem?: MenuItem }>;
+}
+
+export const MenuItemsList = ({
+  menuItemComponent: MenuItemComponent,
+}: MenuItemsListProps): JSX.Element => {
   const {
     data: paginatedData,
     isLoading,
@@ -10,7 +18,11 @@ export const MenuItemsList = () => {
   } = useQuery(MENU_ITEMS_QUERY, () => fetchMenuItems({}));
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return (
+      <Container>
+        <MenuItemComponent />
+      </Container>
+    );
   }
 
   if (isError) {
@@ -22,10 +34,10 @@ export const MenuItemsList = () => {
   }
 
   return (
-    <li>
+    <Container>
       {paginatedData?.data.map((menuItem) => (
-        <li key={menuItem.id}>{menuItem.name}</li>
+        <MenuItemComponent menuItem={menuItem} />
       ))}
-    </li>
+    </Container>
   );
 };

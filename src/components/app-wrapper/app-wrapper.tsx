@@ -20,7 +20,7 @@ export const AppWrapper = () => {
   return (
     <>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: 'flex-end' }}>
           {currentUser ? (
             <Button onClick={handleLogout} color="inherit">
               Logout
