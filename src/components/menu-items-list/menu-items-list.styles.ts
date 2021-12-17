@@ -8,3 +8,12 @@ export const Container = styled.section`
 
   padding: 16px;
 `;
+
+export const MessageContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 32px 16px;
+`;

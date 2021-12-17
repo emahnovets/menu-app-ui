@@ -6,13 +6,16 @@ import { FetchMenuItemsQuery } from '../types/fetch-menu-items.query.interface';
 
 export async function fetchMenuItems(
   params: FetchMenuItemsQuery,
+  isAdminView?: boolean,
 ): Promise<Paginated<MenuItem>> {
-  const response = await fetch(
-    `${process.env.REACT_APP_API_URL}/v1/menu-items?${stringify(params)}`,
-    {
-      headers: getHeaders(),
-    },
-  );
+  const url = isAdminView
+    ? `${process.env.REACT_APP_API_URL}/v1/admin/menu-items?${stringify(
+        params,
+      )}`
+    : `${process.env.REACT_APP_API_URL}/v1/menu-items?${stringify(params)}`;
+  const response = await fetch(url, {
+    headers: getHeaders(),
+  });
 
   if (!response.ok) {
     throw Error(response.statusText);

@@ -1,12 +1,17 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const StyledCard = styled(Card)`
   display: grid;
   grid-template-columns: 2fr 3fr;
   min-height: 128px;
+
+  &.inactive {
+    opacity: 0.5;
+  }
 `;
 
 export const ImagePlaceholder = styled.div`
@@ -34,7 +39,20 @@ export const Media = styled.img`
   background-repeat: no-repeat;
   background-position: center;
   width: 100%;
+  height: 100%;
   object-fit: cover;
   overflow: hidden;
   align-self: center;
+`;
+
+export const Actions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const StyledLink = styled(Link)`
+  top: 8px;
+  right: 8px;
+  text-decoration: none;
+  color: black;
 `;

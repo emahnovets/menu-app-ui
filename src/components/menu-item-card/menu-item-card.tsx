@@ -5,12 +5,13 @@ import { MenuItemCardSkeleton } from 'components/menu-item-card/menu-item-card-s
 
 interface MenuItemCardProps {
   menuItem?: MenuItem;
+  isAdminView?: boolean;
 }
 
-export const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
+export const MenuItemCard = ({ menuItem, isAdminView }: MenuItemCardProps) => {
   if (!menuItem) {
     return <MenuItemCardSkeleton />;
   }
 
-  return <MenuItemCardView menuItem={menuItem} />;
+  return <MenuItemCardView menuItem={menuItem} isAdminView={isAdminView} />;
 };

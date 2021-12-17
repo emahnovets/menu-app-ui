@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
@@ -11,11 +11,13 @@ import { ACCESS_TOKEN_KEY } from 'consts/localStorage.consts';
 export const AppWrapper = () => {
   const currentUser = useContext(UserContext);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const handleLogout = useCallback(() => {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     queryClient.invalidateQueries(CURRENT_USER_QUERY);
-  }, [queryClient]);
+    navigate('/');
+  }, [queryClient, navigate]);
 
   return (
     <>
