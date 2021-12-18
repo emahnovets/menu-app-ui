@@ -15,6 +15,7 @@ import Switch from '@mui/material/Switch';
 import Select from '@mui/material/Select';
 import CircularProgress from '@mui/material/CircularProgress';
 import { FormEvent, useCallback } from 'react';
+import { PRICE_DIVIDER } from 'consts/price.consts';
 
 interface MenuItemModalProps {
   defaultValues?: Partial<MenuItem>;
@@ -40,7 +41,9 @@ export const MenuItemModal = ({
         description: (data.get('description') as string) || undefined,
         imageUrl: (data.get('imageUrl') as string) || undefined,
         isActive: !!data.get('isActive'),
-        price: parseInt(data.get('price') as string, 10),
+        price: Math.round(
+          parseFloat(data.get('price') as string) * PRICE_DIVIDER,
+        ),
         currency: data.get('currency') as string,
       });
     },
@@ -105,7 +108,19 @@ export const MenuItemModal = ({
                 label="Price"
                 name="price"
                 type="number"
-                defaultValue={defaultValues?.price}
+                defaultValue={
+                  defaultValues?.price == null
+                    ? 0
+                    : defaultValues.price / PRICE_DIVIDER
+                }
+                InputProps={{
+                  componentsProps: {
+                    input: {
+                      step: '0.01',
+                      min: 0,
+                    },
+                  },
+                }}
                 autoFocus
               />
               <FormControl
