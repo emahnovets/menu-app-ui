@@ -8,10 +8,11 @@ import { useNavigate } from 'react-router-dom';
 export const useFormSubmitHandler = (): [
   handleSubmit: FormEventHandler,
   isLoading: boolean,
+  isError: boolean,
 ] => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { mutate, isLoading } = useMutation(login, {
+  const { mutate, isLoading, isError } = useMutation(login, {
     onSuccess: (data) => {
       localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken);
       queryClient.invalidateQueries(CURRENT_USER_QUERY);
@@ -33,5 +34,5 @@ export const useFormSubmitHandler = (): [
     [mutate],
   );
 
-  return [handleSubmit, isLoading];
+  return [handleSubmit, isLoading, isError];
 };

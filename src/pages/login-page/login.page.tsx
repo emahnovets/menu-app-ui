@@ -9,7 +9,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useFormSubmitHandler } from 'pages/login-page/login.page.hooks';
 
 export const LoginPage = () => {
-  const [handleSubmit, isLoading] = useFormSubmitHandler();
+  const [handleSubmit, isLoading, isError] = useFormSubmitHandler();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -51,6 +51,15 @@ export const LoginPage = () => {
             autoComplete="current-password"
             data-cy="password-input"
           />
+          {isError && (
+            <Typography
+              variant="caption"
+              color="red"
+              data-cy="login-error-message"
+            >
+              Incorrect username or password.
+            </Typography>
+          )}
           <LoadingButton
             type="submit"
             fullWidth
