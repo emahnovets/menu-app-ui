@@ -4,6 +4,10 @@
 import * as faker from 'faker';
 
 describe('Login (with fake api)', () => {
+  beforeEach(() => {
+    cy.clearLocalStorage();
+  });
+
   it('should send correct request body and save accessToken to LS', () => {
     cy.visit('/login');
 

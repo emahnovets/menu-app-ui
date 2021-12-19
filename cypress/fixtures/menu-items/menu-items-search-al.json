@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "id": 6,
+      "name": "National",
+      "description": "Account vertical HTTP Brand Angola Tactics Agent Usability National Shoes",
+      "isActive": true,
+      "price": 1958,
+      "currency": "EUR"
+    },
+    {
+      "id": 7,
+      "name": "teal",
+      "description": "New Account white SQL Soft communities copying haptic Czech Supervisor",
+      "isActive": true,
+      "price": 8597,
+      "currency": "USD"
+    }
+  ]
+}

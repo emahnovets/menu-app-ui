@@ -30,22 +30,23 @@ export const DeleteMenuItemPage = () => {
   }, [mutate, id]);
 
   return (
-    <Dialog
-      open
-      onClose={handleCancel}
-      aria-labelledby="responsive-dialog-title"
-    >
-      <DialogTitle id="responsive-dialog-title">Confirmation</DialogTitle>
+    <Dialog open onClose={handleCancel} data-cy="delete-confirmation-dialog">
+      <DialogTitle>Confirmation</DialogTitle>
       <DialogContent>
         <DialogContentText>
           Are you sure that you want to delete menu item?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleCancel}>
+        <Button autoFocus onClick={handleCancel} data-cy="cancel-button">
           Cancel
         </Button>
-        <LoadingButton onClick={handleDelete} autoFocus loading={isLoading}>
+        <LoadingButton
+          onClick={handleDelete}
+          autoFocus
+          loading={isLoading}
+          data-cy="delete-button"
+        >
           Delete
         </LoadingButton>
       </DialogActions>

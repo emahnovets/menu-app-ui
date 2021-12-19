@@ -2,6 +2,10 @@
 /// <reference types="../../support" />
 
 describe('Login', () => {
+  beforeEach(() => {
+    cy.clearLocalStorage();
+  });
+
   it('user should be able to login', () => {
     cy.visit('/');
     cy.url().should('include', '/menu-items');

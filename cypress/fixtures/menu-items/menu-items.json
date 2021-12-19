@@ -1,0 +1,84 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "ROI",
+      "description": "parse application magenta Hat Track Rapid Kentucky Accountability 1080p mobile",
+      "isActive": true,
+      "price": 2972,
+      "currency": "EUR"
+    },
+    {
+      "id": 2,
+      "name": "Steel",
+      "description": "Franc Agent Planner Dollar policy deposit wireless parsing Saint Licensed",
+      "isActive": true,
+      "price": 889,
+      "currency": "EUR"
+    },
+    {
+      "id": 3,
+      "name": "mint",
+      "description": "strategy port Steel Principal mobile calculating Cheese deposit Health International",
+      "isActive": true,
+      "price": 2524,
+      "currency": "EUR"
+    },
+    {
+      "id": 4,
+      "name": "intermediate",
+      "description": "interface neural wireless Tonga white cross-platform Landing optical Rustic Jewelery",
+      "isActive": true,
+      "price": 1113,
+      "currency": "USD"
+    },
+    {
+      "id": 5,
+      "name": "Granite",
+      "description": "primary parallelism firewall Fresh multi-byte PCI Dynamic Cambridgeshire Sausages transmit",
+      "isActive": true,
+      "price": 2049,
+      "currency": "USD"
+    },
+    {
+      "id": 6,
+      "name": "National",
+      "description": "Account vertical HTTP Brand Angola Tactics Agent Usability National Shoes",
+      "isActive": true,
+      "price": 1958,
+      "currency": "EUR"
+    },
+    {
+      "id": 7,
+      "name": "teal",
+      "description": "New Account white SQL Soft communities copying haptic Czech Supervisor",
+      "isActive": true,
+      "price": 8597,
+      "currency": "USD"
+    },
+    {
+      "id": 8,
+      "name": "invoice",
+      "description": "New Plastic Marketing infomediaries Shoes up systems Mountain indexing Orchestrator",
+      "isActive": true,
+      "price": 9550,
+      "currency": "EUR"
+    },
+    {
+      "id": 9,
+      "name": "United",
+      "description": "Table Pennsylvania Grocery loyalty monitor Unbranded Cambridgeshire Applications productize ROI",
+      "isActive": true,
+      "price": 2358,
+      "currency": "USD"
+    },
+    {
+      "id": 10,
+      "name": "Ohio",
+      "description": "green Lead input Central best-of-breed copying Analyst Legacy Algerian markets",
+      "isActive": true,
+      "price": 2505,
+      "currency": "EUR"
+    }
+  ]
+}

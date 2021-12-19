@@ -14,8 +14,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import Select from '@mui/material/Select';
 import CircularProgress from '@mui/material/CircularProgress';
-import { FormEvent, useCallback } from 'react';
+import { FormEvent, InputHTMLAttributes, useCallback } from 'react';
 import { PRICE_DIVIDER } from 'consts/price.consts';
+
+const checkboxProps = {
+  'data-cy': 'is-active-checkbox',
+} as InputHTMLAttributes<HTMLInputElement>;
 
 interface MenuItemModalProps {
   defaultValues?: Partial<MenuItem>;
@@ -51,14 +55,10 @@ export const MenuItemModal = ({
   );
 
   return (
-    <Dialog
-      open
-      onClose={handleCancel}
-      aria-labelledby="responsive-dialog-title"
-    >
+    <Dialog open onClose={handleCancel} data-cy="menu-item-dialog">
       {defaultValues ? (
         <form onSubmit={handleSubmit}>
-          <DialogTitle id="responsive-dialog-title">Edit menu item</DialogTitle>
+          <DialogTitle>Edit menu item</DialogTitle>
           <DialogContent>
             <TextField
               margin="normal"
@@ -69,6 +69,7 @@ export const MenuItemModal = ({
               name="name"
               defaultValue={defaultValues?.name}
               autoFocus
+              data-cy="name-input"
             />
             <TextField
               margin="normal"
@@ -79,6 +80,7 @@ export const MenuItemModal = ({
               name="description"
               defaultValue={defaultValues?.description}
               autoFocus
+              data-cy="description-input"
             />
             <TextField
               margin="normal"
@@ -89,12 +91,14 @@ export const MenuItemModal = ({
               name="imageUrl"
               defaultValue={defaultValues?.imageUrl}
               autoFocus
+              data-cy="image-url-input"
             />
             <FormControlLabel
               control={
                 <Switch
                   defaultChecked={!!defaultValues?.isActive}
                   name="isActive"
+                  inputProps={checkboxProps}
                 />
               }
               label="Active"
@@ -122,6 +126,7 @@ export const MenuItemModal = ({
                   },
                 }}
                 autoFocus
+                data-cy="price-input"
               />
               <FormControl
                 sx={{
@@ -139,15 +144,20 @@ export const MenuItemModal = ({
                   label="Currency"
                   defaultValue={defaultValues?.currency}
                   name="currency"
+                  data-cy="currency-select"
                 >
-                  <SelectItem value="USD">USD</SelectItem>
-                  <SelectItem value="EUR">EUR</SelectItem>
+                  <SelectItem value="USD" data-cy="currency-select-item-USD">
+                    USD
+                  </SelectItem>
+                  <SelectItem value="EUR" data-cy="currency-select-item-EUR">
+                    EUR
+                  </SelectItem>
                 </Select>
               </FormControl>
             </Box>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleCancel}>
+            <Button autoFocus onClick={handleCancel} data-cy="cancel-button">
               Cancel
             </Button>
             <LoadingButton
@@ -155,13 +165,14 @@ export const MenuItemModal = ({
               autoFocus
               variant="contained"
               loading={isSubmitting}
+              data-cy="submit-button"
             >
               Save
             </LoadingButton>
           </DialogActions>
         </form>
       ) : (
-        <CircularProgress />
+        <CircularProgress data-cy="loader" />
       )}
     </Dialog>
   );

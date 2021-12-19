@@ -25,6 +25,7 @@ export const Search = ({ text, onChange: handleSearch }: SearchProps) => {
         name="search"
         value={text}
         onChange={handleChange}
+        data-cy="search-input"
       />
     </Container>
   );

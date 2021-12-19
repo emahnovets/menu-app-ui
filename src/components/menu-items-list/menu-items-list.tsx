@@ -25,7 +25,7 @@ export const MenuItemsList = ({
     isLoading,
     isError,
   } = useQuery([MENU_ITEMS_QUERY, query, isAdminView], () =>
-    fetchMenuItems({ query }, isAdminView),
+    fetchMenuItems(query ? { query } : {}, isAdminView),
   );
 
   if (isLoading) {

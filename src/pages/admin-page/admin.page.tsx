@@ -20,7 +20,13 @@ export const AdminPage = () => {
       />
       <Outlet />
       <AddButtonWrapper>
-        <Fab component={Link} to="create" color="primary" aria-label="add">
+        <Fab
+          component={Link}
+          to="create"
+          color="primary"
+          aria-label="add"
+          data-cy="create-menu-item-button"
+        >
           <AddIcon />
         </Fab>
       </AddButtonWrapper>

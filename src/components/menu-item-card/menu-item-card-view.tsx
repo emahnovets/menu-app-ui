@@ -31,7 +31,14 @@ export const MenuItemCardView = ({
   }).format(menuItem.price / PRICE_DIVIDER);
 
   return (
-    <StyledCard className={menuItem.isActive ? '' : 'inactive'}>
+    <StyledCard
+      className={menuItem.isActive ? '' : 'inactive'}
+      data-cy={
+        menuItem.isActive
+          ? `menu-item-card-${menuItem.id}`
+          : `menu-item-card-${menuItem.id}-inactive`
+      }
+    >
       {menuItem.imageUrl ? (
         <Media src={menuItem.imageUrl} alt={menuItem.name} />
       ) : (
@@ -42,24 +49,26 @@ export const MenuItemCardView = ({
       <Content>
         {isAdminView && (
           <Actions>
-            <StyledLink to={`${menuItem.id}`}>
+            <StyledLink to={`${menuItem.id}`} data-cy="edit-button">
               <IconButton>
                 <EditIcon fontSize="small" />
               </IconButton>
             </StyledLink>
 
-            <StyledLink to={`${menuItem.id}/delete`}>
+            <StyledLink to={`${menuItem.id}/delete`} data-cy="delete-button">
               <IconButton>
                 <DeleteIcon fontSize="small" />
               </IconButton>
             </StyledLink>
           </Actions>
         )}
-        <Typography variant="h5" component="div">
+        <Typography variant="h5" component="div" data-cy="name-label">
           {menuItem.name}
         </Typography>
-        <Typography variant="body2">{menuItem.description}</Typography>
-        <Price>{price}</Price>
+        <Typography variant="body2" data-cy="description-label">
+          {menuItem.description}
+        </Typography>
+        <Price data-cy="price-label">{price}</Price>
       </Content>
     </StyledCard>
   );

@@ -8,11 +8,11 @@ export async function fetchMenuItems(
   params: FetchMenuItemsQuery,
   isAdminView?: boolean,
 ): Promise<Paginated<MenuItem>> {
-  const url = isAdminView
-    ? `${process.env.REACT_APP_API_URL}/v1/admin/menu-items?${stringify(
-        params,
-      )}`
-    : `${process.env.REACT_APP_API_URL}/v1/menu-items?${stringify(params)}`;
+  const path = isAdminView ? '/v1/admin/menu-items' : '/v1/menu-items';
+  const url = `${process.env.REACT_APP_API_URL}${path}${stringify(params, {
+    skipNulls: true,
+    addQueryPrefix: true,
+  })}`;
   const response = await fetch(url, {
     headers: getHeaders(),
   });
