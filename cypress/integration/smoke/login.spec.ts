@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+/// <reference types="../../support" />
 
 describe('Login', () => {
   it('user should be able to login', () => {
