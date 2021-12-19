@@ -26,7 +26,7 @@ jobs:
           CYPRESS_TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
           CYPRESS_TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
         with:
-          build: npm run build
+          build: npm run build:ci
           start: npm run start:ci
       - name: Save screenshots and videos
         uses: actions/upload-artifact@v2

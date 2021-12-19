@@ -30,3 +30,5 @@ cypress.env.json
 # Cypress files
 cypress/screenshots
 cypress/videos
+cypress-coverage
+.nyc_output

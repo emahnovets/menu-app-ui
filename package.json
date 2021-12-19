@@ -24,12 +24,15 @@
     "api:stop": "docker-compose stop",
     "start": "react-scripts start",
     "start:ci": "serve -s build --no-clipboard --listen 8080",
+    "start:cy": "react-scripts -r @cypress/instrument-cra start",
     "lint": "eslint cypress src --ext .js,.ts,.tsx",
     "build": "react-scripts build",
+    "build:ci": "CYPRESS_INSTRUMENT_PRODUCTION=true react-scripts -r @cypress/instrument-cra build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
+    "cy:open:coverage": "open cypress-coverage/lcov-report/index.html",
     "gen:env": "./scripts/generate_env.sh"
   },
   "browserslist": {
@@ -45,6 +48,8 @@
     ]
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.9.12",
+    "@cypress/instrument-cra": "^1.4.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -70,5 +75,11 @@
     "faker": "^5.5.3",
     "prettier": "^2.5.1",
     "serve": "^13.0.2"
+  },
+  "nyc": {
+    "report-dir": "cypress-coverage",
+    "exclude": [
+      "src/**/*.spec.{ts,tsx}"
+    ]
   }
 }
