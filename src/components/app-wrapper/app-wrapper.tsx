@@ -24,11 +24,20 @@ export const AppWrapper = () => {
       <AppBar position="sticky">
         <Toolbar sx={{ justifyContent: 'flex-end' }}>
           {currentUser ? (
-            <Button onClick={handleLogout} color="inherit">
+            <Button
+              onClick={handleLogout}
+              color="inherit"
+              data-cy="logout-button"
+            >
               Logout
             </Button>
           ) : (
-            <Button component={Link} to="/login" color="inherit">
+            <Button
+              component={Link}
+              to="/login"
+              color="inherit"
+              data-cy="login-button"
+            >
               Login
             </Button>
           )}

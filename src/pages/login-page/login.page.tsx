@@ -28,7 +28,7 @@ export const LoginPage = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -38,6 +38,7 @@ export const LoginPage = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            data-cy="email-input"
           />
           <TextField
             margin="normal"
@@ -48,6 +49,7 @@ export const LoginPage = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            data-cy="password-input"
           />
           <LoadingButton
             type="submit"
@@ -55,6 +57,7 @@ export const LoginPage = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             loading={isLoading}
+            data-cy="sign-in-button"
           >
             Sign In
           </LoadingButton>
