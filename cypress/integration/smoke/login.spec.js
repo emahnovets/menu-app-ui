@@ -6,7 +6,7 @@ describe('Login', () => {
     cy.clearLocalStorage();
   });
 
-  it('user should be able to login', () => {
+  it('user should be able to login and logout', () => {
     cy.visit('/');
     cy.url().should('include', '/menu-items');
 
@@ -18,7 +18,8 @@ describe('Login', () => {
     cy.dataCy('sign-in-button').click();
 
     cy.url().should('include', '/menu-items');
-    cy.dataCy('logout-button').should('be.visible');
     cy.dataCy('login-button').should('not.exist');
+    cy.dataCy('logout-button').should('be.visible').click().should('not.exist');
+    cy.dataCy('login-button').should('be.visible');
   });
 });
