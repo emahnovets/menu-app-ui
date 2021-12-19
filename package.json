@@ -30,12 +30,14 @@
     "api:start": "docker-compose pull && docker-compose up -d",
     "api:stop": "docker-compose stop",
     "start": "react-scripts start",
+    "start:ci": "serve -s build --no-clipboard --listen 8080",
     "lint": "eslint cypress src --ext .js,.ts,.tsx",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "gen:env": "./scripts/generate_env.sh"
   },
   "browserslist": {
     "production": [
@@ -64,6 +66,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "serve": "^13.0.2"
   }
 }
