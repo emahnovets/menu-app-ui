@@ -48,7 +48,7 @@ export const MenuItemsList = ({
   if (!paginatedData?.data?.length) {
     return (
       <MessageContainer>
-        <Typography>No items found</Typography>
+        <Typography data-cy="no-items-message">No items found</Typography>
       </MessageContainer>
     );
   }
