@@ -15,7 +15,7 @@ import Switch from '@mui/material/Switch';
 import Select from '@mui/material/Select';
 import CircularProgress from '@mui/material/CircularProgress';
 import { FormEvent, InputHTMLAttributes, useCallback } from 'react';
-import { PRICE_DIVIDER } from 'consts/price.consts';
+import { AVAILABLE_CURRENCIES, PRICE_DIVIDER } from 'consts/price.consts';
 
 const checkboxProps = {
   'data-cy': 'is-active-checkbox',
@@ -146,12 +146,14 @@ export const MenuItemModal = ({
                   name="currency"
                   data-cy="currency-select"
                 >
-                  <SelectItem value="USD" data-cy="currency-select-item-USD">
-                    USD
-                  </SelectItem>
-                  <SelectItem value="EUR" data-cy="currency-select-item-EUR">
-                    EUR
-                  </SelectItem>
+                  {AVAILABLE_CURRENCIES.map((currency) => (
+                    <SelectItem
+                      value={currency}
+                      data-cy={`currency-select-item-${currency}`}
+                    >
+                      {currency}
+                    </SelectItem>
+                  ))}
                 </Select>
               </FormControl>
             </Box>

@@ -6,10 +6,24 @@
 #              the last command to exit with a non-zero status
 set -euo pipefail
 
-sed "s+<db-pass>+$DB_PASS+g" api.env.template | \
-sed "s+<jwt-secret>+$JWT_SECRET+g"  | \
-sed "s+<app-admin-email>+$ADMIN_EMAIL+g" | \
-sed "s+<app-admin-pass>+$ADMIN_PASS+g" > api.env
+if [ "${CI:-false}" = true ] ; then
+  dbPass="$DB_PASS"
+  jwtSecret="$JWT_SECRET"
+  adminEmail="$ADMIN_EMAIL"
+  adminPass="$ADMIN_PASS"
+else
+  read -rp 'Database Password: ' dbPass
+  read -rp 'JWT Secret: ' jwtSecret
+  read -rp 'Admin Email: ' adminEmail
+  read -rp 'Admin Password: ' adminPass
+fi
+
+sed "s+<db-pass>+$dbPass+g" api.env.template | \
+sed "s+<jwt-secret>+$jwtSecret+g"  | \
+sed "s+<app-admin-email>+$adminEmail+g" | \
+sed "s+<app-admin-pass>+$adminPass+g" > api.env
 
 cp db.env.template db.env
-sed "s/<db-pass>/$DB_PASS/g" db.env.template > db.env
+sed "s/<db-pass>/$dbPass/g" db.env.template > db.env
+
+echo "{ \"TEST_USER_EMAIL\": \"$adminEmail\", \"TEST_USER_PASSWORD\": \"$adminPass\" }" > cypress.env.json

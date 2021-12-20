@@ -1,3 +1,5 @@
+import * as faker from 'faker';
+
 Cypress.Commands.add('dataCy', (value) => cy.get(`[data-cy*="${value}"]`));
 
 Cypress.Commands.add('login', () => {
@@ -35,9 +37,20 @@ Cypress.Commands.add('expectItemCard', (id, menuItem, disabled) => {
       'contain.text',
       Intl.NumberFormat(undefined, {
         currency: menuItem.currency,
-      }).format(menuItem.price),
+      }).format(menuItem.price / 100),
     );
   });
+});
+
+Cypress.Commands.add('getFakeItem', (menuItem) => {
+  return {
+    name: faker.random.word(),
+    description: faker.random.words(10),
+    isActive: faker.datatype.boolean(),
+    price: faker.datatype.number({ min: 0, max: 10000 }),
+    currency: faker.random.arrayElement(['USD', 'EUR']),
+    ...menuItem,
+  };
 });
 
 Cypress.Commands.add('expectItemCards', (menuItemsResponse) => {
@@ -46,9 +59,6 @@ Cypress.Commands.add('expectItemCards', (menuItemsResponse) => {
     .should('have.length', menuItemsResponse.data.length);
 
   menuItemsResponse.data.forEach((menuItem) => {
-    cy.expectItemCard(menuItem.id, {
-      ...menuItem,
-      price: menuItem.price / 100,
-    });
+    cy.expectItemCard(menuItem.id, menuItem);
   });
 });

@@ -53,11 +53,8 @@ describe('Login (with fake api)', () => {
       { statusCode: 401 },
     ).as('login');
 
-    const email = faker.internet.email();
-    const password = faker.lorem.words(3);
-
-    cy.dataCy('email-input').type(email);
-    cy.dataCy('password-input').type(password);
+    cy.dataCy('email-input').type(faker.internet.email());
+    cy.dataCy('password-input').type(faker.lorem.words(3));
     cy.dataCy('sign-in-button').click();
     cy.dataCy('login-error-message').should('be.visible');
   });

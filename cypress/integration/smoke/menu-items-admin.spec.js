@@ -1,25 +1,14 @@
 /// <reference types="cypress" />
 /// <reference types="../../support" />
 
-import * as faker from 'faker';
-
 describe('Menu Items Admin', () => {
-  let testMenuItem;
-
   beforeEach(() => {
     cy.clearLocalStorage();
     cy.login();
-
-    testMenuItem = {
-      name: faker.random.word(),
-      description: faker.random.words(10),
-      isActive: true,
-      price: faker.datatype.number({ min: 0, max: 100, precision: 0.01 }),
-      currency: faker.random.arrayElement(['USD', 'EUR']),
-    };
+    cy.getFakeItem({ isActive: true }).as('testMenuItem');
   });
 
-  it('user be able to add new menu item', () => {
+  it('user be able to add new menu item', function test() {
     cy.visit('/');
     cy.url().should('include', '/menu-items');
 
@@ -31,11 +20,11 @@ describe('Menu Items Admin', () => {
     );
     cy.intercept('/v1/admin/menu-items').as('getMenuItems');
 
-    cy.dataCy('name-input').type(testMenuItem.name);
-    cy.dataCy('description-input').type(testMenuItem.description);
+    cy.dataCy('name-input').type(this.testMenuItem.name);
+    cy.dataCy('description-input').type(this.testMenuItem.description);
     cy.dataCy('is-active-checkbox').should('be.checked');
-    cy.dataCy('price-input').type(testMenuItem.price);
-    cy.selectItem('currency-select', testMenuItem.currency);
+    cy.dataCy('price-input').type(this.testMenuItem.price / 100);
+    cy.selectItem('currency-select', this.testMenuItem.currency);
     cy.dataCy('submit-button').click();
 
     cy.url().should('include', '/menu-items');
@@ -44,50 +33,45 @@ describe('Menu Items Admin', () => {
     cy.wait('@createMenuItem')
       .its('response.body')
       .then((body) => {
-        cy.expectItemCard(body.id, testMenuItem);
+        cy.expectItemCard(body.id, this.testMenuItem);
       });
   });
 
-  it('user be able to edit menu item', () => {
-    const newMenuItem = {
-      name: faker.random.word(),
-      description: faker.random.words(10),
-      isActive: true,
-      price: Math.round(
-        faker.datatype.number({ min: 0, max: 100, precision: 0.01 }) * 100,
-      ),
-      currency: faker.random.arrayElement(['USD', 'EUR']),
-    };
-    cy.createMenuItem(newMenuItem).then((response) => {
-      const { id } = response.body;
+  it('user be able to edit menu item', function test() {
+    cy.getFakeItem({ isActive: true }).then((fakeMenuItem) =>
+      cy
+        .createMenuItem(fakeMenuItem)
+        .its('body')
+        .then(({ id }) => {
+          cy.visit('/');
+          cy.dataCy(`menu-item-card-${id}`).within(() => {
+            cy.dataCy('edit-button').click();
+          });
 
-      cy.visit('/');
-      cy.dataCy(`menu-item-card-${id}`).within(() => {
-        cy.dataCy('edit-button').click();
-      });
+          cy.url().should('include', `/menu-items/${id}`);
+          cy.intercept('/v1/admin/menu-items').as('getMenuItems');
 
-      cy.url().should('include', `/menu-items/${id}`);
-      cy.intercept('/v1/admin/menu-items').as('getMenuItems');
+          cy.dataCy('name-input').clear().type(this.testMenuItem.name);
+          cy.dataCy('description-input')
+            .clear()
+            .type(this.testMenuItem.description);
+          cy.dataCy('is-active-checkbox').should('be.checked');
+          cy.dataCy('price-input')
+            .clear()
+            .type(this.testMenuItem.price / 100);
+          cy.selectItem('currency-select', this.testMenuItem.currency);
+          cy.dataCy('submit-button').click();
 
-      cy.dataCy('name-input').clear().type(testMenuItem.name);
-      cy.dataCy('description-input').clear().type(testMenuItem.description);
-      cy.dataCy('is-active-checkbox').should('be.checked');
-      cy.dataCy('price-input').clear().type(testMenuItem.price);
-      cy.selectItem('currency-select', testMenuItem.currency);
-      cy.dataCy('submit-button').click();
+          cy.url().should('include', '/menu-items');
+          cy.wait('@getMenuItems');
 
-      cy.url().should('include', '/menu-items');
-      cy.wait('@getMenuItems');
-
-      cy.expectItemCard(id, testMenuItem);
-    });
+          cy.expectItemCard(id, this.testMenuItem);
+        }),
+    );
   });
 
-  it('user be able to delete menu item', () => {
-    cy.createMenuItem({
-      ...testMenuItem,
-      price: Math.round(testMenuItem.price * 100),
-    }).then((response) => {
+  it('user be able to delete menu item', function test() {
+    cy.createMenuItem(this.testMenuItem).then((response) => {
       const { id } = response.body;
 
       cy.visit('/');
@@ -111,11 +95,8 @@ describe('Menu Items Admin', () => {
     });
   });
 
-  it('user be able to disable menu item', () => {
-    cy.createMenuItem({
-      ...testMenuItem,
-      price: Math.round(testMenuItem.price * 100),
-    }).then((response) => {
+  it('user be able to disable menu item', function test() {
+    cy.createMenuItem(this.testMenuItem).then((response) => {
       const { id } = response.body;
 
       cy.visit('/');
@@ -132,7 +113,7 @@ describe('Menu Items Admin', () => {
       cy.url().should('include', '/menu-items');
       cy.wait('@getMenuItems');
 
-      cy.expectItemCard(id, testMenuItem, true);
+      cy.expectItemCard(id, this.testMenuItem, true);
     });
   });
 });
