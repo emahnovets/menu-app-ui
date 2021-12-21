@@ -24,7 +24,7 @@
     "api:stop": "docker-compose stop",
     "start": "react-scripts start",
     "start:ci": "serve -s build --no-clipboard --listen 8080",
-    "start:cy": "react-scripts -r @cypress/instrument-cra start",
+    "start:cy": "CYPRESS_INSTRUMENT_PRODUCTION=true react-scripts -r @cypress/instrument-cra start",
     "lint": "eslint cypress src --ext .js,.ts,.tsx",
     "build": "react-scripts build",
     "build:ci": "CYPRESS_INSTRUMENT_PRODUCTION=true react-scripts -r @cypress/instrument-cra build",
