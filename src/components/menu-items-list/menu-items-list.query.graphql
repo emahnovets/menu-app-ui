@@ -1,12 +1,12 @@
-query MenuItemsListQuery($query: String) {
+query MenuItemsList($query: String) {
   getMenuItems(input: { query: $query }) {
     data {
-      id
-      name
-      description
-      isActive
-      price
       currency
+      description
+      id
+      isActive
+      name
+      price
     }
   }
 }

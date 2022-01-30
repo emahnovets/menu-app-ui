@@ -68,4 +68,22 @@ module.exports = {
       },
     },
   },
+  overrides: [
+    {
+      files: ['*.graphql'],
+      extends: 'plugin:@graphql-eslint/operations-all',
+      rules: {
+        '@graphql-eslint/match-document-filename': [
+          'error',
+          {
+            fileExtension: '.graphql',
+            query: { style: 'kebab-case', suffix: '.query' },
+            mutation: { style: 'kebab-case', suffix: '.mutation' },
+            subscription: { style: 'kebab-case', suffix: '.subscription' },
+            fragment: { style: 'kebab-case', suffix: '.fragment' },
+          },
+        ],
+      },
+    },
+  ],
 };
