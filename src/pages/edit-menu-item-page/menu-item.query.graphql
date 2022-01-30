@@ -1,0 +1,11 @@
+query MenuItem($id: Int!) {
+  getMenuItem(id: $id) {
+    currency
+    description
+    id
+    imageUrl
+    isActive
+    name
+    price
+  }
+}

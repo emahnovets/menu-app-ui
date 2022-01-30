@@ -3,11 +3,9 @@ import {
   Container,
   MessageContainer,
 } from 'components/menu-items-list/menu-items-list.styles';
-import { MENU_ITEMS_QUERY } from 'consts/queries.consts';
-import { fetchMenuItems } from 'queries/fetch-menu-items';
-import { useQuery } from 'react-query';
 import { MenuItem } from 'types/menu-item.interface';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import { useMenuItemsList } from 'components/menu-items-list/__generated__/menu-items-list.query';
 
 interface MenuItemsListProps {
   query?: string;
@@ -20,15 +18,10 @@ export const MenuItemsList = ({
   isAdminView,
   menuItemComponent: MenuItemComponent,
 }: MenuItemsListProps): JSX.Element => {
-  const {
-    data: paginatedData,
-    isLoading,
-    isError,
-  } = useQuery([MENU_ITEMS_QUERY, query, isAdminView], () =>
-    fetchMenuItems(query ? { query } : {}, isAdminView),
-  );
+  const { data, loading, error } = useMenuItemsList({ variables: { query } });
+  const menuItems = data?.getMenuItems.data ?? [];
 
-  if (isLoading) {
+  if (loading) {
     return (
       <Container>
         <MenuItemComponent />
@@ -36,7 +29,7 @@ export const MenuItemsList = ({
     );
   }
 
-  if (isError) {
+  if (error) {
     return (
       <MessageContainer>
         <SentimentDissatisfiedIcon fontSize="large" />
@@ -45,7 +38,7 @@ export const MenuItemsList = ({
     );
   }
 
-  if (!paginatedData?.data?.length) {
+  if (!menuItems.length) {
     return (
       <MessageContainer>
         <Typography data-cy="no-items-message">No items found</Typography>
@@ -55,8 +48,12 @@ export const MenuItemsList = ({
 
   return (
     <Container>
-      {paginatedData?.data.map((menuItem) => (
-        <MenuItemComponent menuItem={menuItem} isAdminView={isAdminView} />
+      {menuItems.map((menuItem) => (
+        <MenuItemComponent
+          key={menuItem.id}
+          menuItem={menuItem}
+          isAdminView={isAdminView}
+        />
       ))}
     </Container>
   );

@@ -1,8 +1,9 @@
+import { useApolloClient } from '@apollo/client';
+import { CurrentUserDocument } from 'components/user-context/__generated__/current-user.query';
 import { ACCESS_TOKEN_KEY } from 'consts/localStorage.consts';
-import { CURRENT_USER_QUERY } from 'consts/queries.consts';
 import { login } from 'queries/login';
 import { FormEvent, FormEventHandler, useCallback } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
 export const useFormSubmitHandler = (): [
@@ -11,11 +12,12 @@ export const useFormSubmitHandler = (): [
   isError: boolean,
 ] => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const client = useApolloClient();
   const { mutate, isLoading, isError } = useMutation(login, {
     onSuccess: (data) => {
       localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken);
-      queryClient.invalidateQueries(CURRENT_USER_QUERY);
+      client.resetStore();
+      client.refetchQueries({ include: [CurrentUserDocument] });
 
       navigate('/');
     },

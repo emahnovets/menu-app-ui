@@ -1,45 +1,44 @@
 import { MenuItemModal } from 'components/menu-item-modal';
-import { MENU_ITEMS_QUERY } from 'consts/queries.consts';
-import { fetchMenuItem } from 'queries/fetch-menu-item';
-import { patchMenuItem } from 'queries/patch-menu-item';
+import { MenuItemsListDocument } from 'components/menu-items-list/__generated__/menu-items-list.query';
+import {
+  MenuItemDocument,
+  useMenuItem,
+} from 'pages/edit-menu-item-page/__generated__/menu-item.query';
+import { useUpdateMenuItem } from 'pages/edit-menu-item-page/__generated__/update-menu-item.mutation';
 import { useCallback } from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MenuItem } from 'types/menu-item.interface';
 
 export const EditMenuItemPage = () => {
-  const { id = '-1' } = useParams();
+  const { id: idFromPath = '-1' } = useParams();
+  const id = parseInt(idFromPath, 10);
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const { data } = useQuery([MENU_ITEMS_QUERY, id], () =>
-    fetchMenuItem(parseInt(id, 10)),
-  );
-  const { mutate, isLoading } = useMutation(patchMenuItem, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(MENU_ITEMS_QUERY);
-
-      navigate('/');
+  const { data } = useMenuItem({ variables: { id } });
+  const menuItem = data?.getMenuItem ?? undefined;
+  const [updateMenuItemMutation, { loading: isSubmitting }] = useUpdateMenuItem(
+    {
+      onCompleted: () => navigate('/'),
+      refetchQueries: [MenuItemsListDocument, MenuItemDocument],
     },
-  });
+  );
   const handleCancel = useCallback(() => {
     navigate('/');
   }, [navigate]);
   const handleSave = useCallback(
     (values: Partial<Omit<MenuItem, 'id'>>) => {
-      mutate({
-        id: parseInt(id, 10),
-        ...values,
+      updateMenuItemMutation({
+        variables: { id, ...values },
       });
     },
-    [id, mutate],
+    [id, updateMenuItemMutation],
   );
 
   return (
     <MenuItemModal
-      defaultValues={data}
+      defaultValues={menuItem}
       onCancel={handleCancel}
       onSave={handleSave}
-      isSubmitting={isLoading}
+      isSubmitting={isSubmitting}
     />
   );
 };

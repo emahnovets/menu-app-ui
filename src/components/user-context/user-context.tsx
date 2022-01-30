@@ -1,13 +1,11 @@
 import { UserContext } from 'components/user-context/user.context';
-import { CURRENT_USER_QUERY } from 'consts/queries.consts';
-import { fetchCurrentUser } from 'queries/fetch-current-user';
+import { useCurrentUser } from 'components/user-context/__generated__/current-user.query';
 import { PropsWithChildren } from 'react';
-import { useQuery } from 'react-query';
 
 export const UserContextProvider = ({ children }: PropsWithChildren<{}>) => {
-  const { data, isSuccess } = useQuery(CURRENT_USER_QUERY, fetchCurrentUser);
+  const { data, error } = useCurrentUser({ errorPolicy: 'ignore' });
 
-  const value = isSuccess ? data : null;
+  const value = error ? null : data?.currentUser;
 
   return (
     <UserContext.Provider value={value ?? null}>

@@ -1,0 +1,27 @@
+mutation CreateMenuItem(
+  $currency: String!
+  $description: String
+  $imageUrl: String
+  $isActive: Boolean!
+  $name: String!
+  $price: Int!
+) {
+  createMenuItem(
+    menuItem: {
+      currency: $currency
+      description: $description
+      imageUrl: $imageUrl
+      isActive: $isActive
+      name: $name
+      price: $price
+    }
+  ) {
+    currency
+    description
+    id
+    imageUrl
+    isActive
+    name
+    price
+  }
+}

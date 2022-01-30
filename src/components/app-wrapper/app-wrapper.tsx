@@ -4,20 +4,19 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import { useCallback, useContext } from 'react';
 import { UserContext } from 'components/user-context/user.context';
-import { useQueryClient } from 'react-query';
-import { CURRENT_USER_QUERY } from 'consts/queries.consts';
 import { ACCESS_TOKEN_KEY } from 'consts/localStorage.consts';
+import { useApolloClient } from '@apollo/client';
 
 export const AppWrapper = () => {
   const currentUser = useContext(UserContext);
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const client = useApolloClient();
 
   const handleLogout = useCallback(() => {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
-    queryClient.invalidateQueries(CURRENT_USER_QUERY);
+    client.resetStore();
     navigate('/');
-  }, [queryClient, navigate]);
+  }, [client, navigate]);
 
   return (
     <>

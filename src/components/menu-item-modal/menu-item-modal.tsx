@@ -23,7 +23,7 @@ const checkboxProps = {
 
 interface MenuItemModalProps {
   defaultValues?: Partial<MenuItem>;
-  onSave: (values: Partial<Omit<MenuItem, 'id'>>) => void;
+  onSave: (values: Omit<MenuItem, 'id'>) => void;
   onCancel: VoidFunction;
   isSubmitting: boolean;
 }

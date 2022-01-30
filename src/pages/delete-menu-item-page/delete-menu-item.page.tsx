@@ -5,29 +5,26 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { MENU_ITEMS_QUERY } from 'consts/queries.consts';
-import { deleteMenuItem } from 'queries/delete-menu-item';
 import { useCallback } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useDeleteMenuItem } from 'pages/delete-menu-item-page/__generated__/delete-menu-item.mutation';
+import { MenuItemsListDocument } from 'components/menu-items-list/__generated__/menu-items-list.query';
+import { MenuItemDocument } from 'pages/edit-menu-item-page/__generated__/menu-item.query';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export const DeleteMenuItemPage = () => {
-  const { id = '-1' } = useParams();
+  const { id: idFromPath = '-1' } = useParams();
+  const id = parseInt(idFromPath, 10);
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const { mutate, isLoading } = useMutation(deleteMenuItem, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(MENU_ITEMS_QUERY);
-
-      navigate('/');
-    },
+  const [deleteMenuItemMutation, { loading }] = useDeleteMenuItem({
+    onCompleted: () => navigate('/'),
+    refetchQueries: [MenuItemsListDocument, MenuItemDocument],
   });
   const handleCancel = useCallback(() => {
     navigate('/');
   }, [navigate]);
   const handleDelete = useCallback(() => {
-    mutate(parseInt(id, 10));
-  }, [mutate, id]);
+    deleteMenuItemMutation({ variables: { id } });
+  }, [deleteMenuItemMutation, id]);
 
   return (
     <Dialog open onClose={handleCancel} data-cy="delete-confirmation-dialog">
@@ -44,7 +41,7 @@ export const DeleteMenuItemPage = () => {
         <LoadingButton
           onClick={handleDelete}
           autoFocus
-          loading={isLoading}
+          loading={loading}
           data-cy="delete-button"
         >
           Delete
