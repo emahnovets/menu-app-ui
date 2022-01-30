@@ -1,7 +1,7 @@
 export interface MenuItem {
   id: number;
   name: string;
-  description?: string;
+  description?: string | null;
   imageUrl?: string;
   isActive: boolean;
   price: number;

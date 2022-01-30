@@ -1,0 +1,64 @@
+input CreateMenuItem {
+  currency: String!
+  description: String
+  imageUrl: String
+  isActive: Boolean!
+  name: String!
+  price: Int!
+}
+
+input GetMenuItemsArgs {
+  query: String
+  skip: Int
+  take: Int
+}
+
+type GetMenuItemsDto {
+  data: [MenuItem!]!
+  total: Int!
+}
+
+type MenuItem {
+  currency: String!
+  description: String
+  id: Int!
+  imageUrl: String
+  isActive: Boolean!
+  name: String!
+  price: Int!
+}
+
+type Mutation {
+  createMenuItem(menuItem: CreateMenuItem!): MenuItem!
+  deleteMenuItem(id: Int!): Int!
+  updateMenuItem(id: Int!, menuItem: UpdateMenuItem!): MenuItem!
+}
+
+type Query {
+  currentUser: User
+  getMenuItem(id: Int): MenuItem
+  getMenuItems(input: GetMenuItemsArgs!): GetMenuItemsDto!
+  menuItems: [MenuItem!]!
+}
+
+type Role {
+  name: String!
+  permissions: [String!]!
+}
+
+input UpdateMenuItem {
+  currency: String
+  description: String
+  imageUrl: String
+  isActive: Boolean
+  name: String
+  price: Int
+}
+
+type User {
+  email: String!
+  firstName: String!
+  id: Int!
+  lastName: String!
+  roles: [Role!]!
+}
