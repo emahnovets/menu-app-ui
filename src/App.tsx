@@ -10,9 +10,25 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { ACCESS_TOKEN_KEY } from 'consts/localStorage.consts';
+import { stringify } from 'qs';
+
+const customFetch = (uri: string, options: RequestInit) => {
+  const { operationName, variables } = JSON.parse(options.body as string);
+  return fetch(
+    `${uri}${stringify(
+      {
+        operationName,
+        ...variables,
+      },
+      { skipNulls: true, addQueryPrefix: true },
+    )}`,
+    options,
+  );
+};
 
 const httpLink = createHttpLink({
   uri: `${process.env.REACT_APP_API_URL}/graphql`,
+  fetch: customFetch,
 });
 
 const authLink = setContext((_, { headers }) => {

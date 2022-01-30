@@ -1,4 +1,5 @@
 import * as faker from 'faker';
+import { stringify } from 'qs';
 
 Cypress.Commands.add('dataCy', (value) => cy.get(`[data-cy*="${value}"]`));
 
@@ -56,9 +57,22 @@ Cypress.Commands.add('getFakeItem', (menuItem) => {
 Cypress.Commands.add('expectItemCards', (menuItemsResponse) => {
   cy.dataCy('menu-item-card')
     .should('be.visible')
-    .should('have.length', menuItemsResponse.data.length);
+    .should('have.length', menuItemsResponse.data.getMenuItems.data.length);
 
-  menuItemsResponse.data.forEach((menuItem) => {
+  menuItemsResponse.data.getMenuItems.data.forEach((menuItem) => {
     cy.expectItemCard(menuItem.id, menuItem);
   });
+});
+
+Cypress.Commands.add('interceptGraphql', (params, response) => {
+  return cy.intercept(
+    {
+      method: 'POST',
+      url: `/graphql${stringify(params, {
+        skipNulls: true,
+        addQueryPrefix: true,
+      })}**`,
+    },
+    response,
+  );
 });

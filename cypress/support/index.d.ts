@@ -11,6 +11,20 @@ declare namespace Cypress {
     currency: string;
   }
 
+  interface GraphqlParams extends Record<string, unknown> {
+    operationName: string;
+  }
+
+  interface GraphqlResponseParams {
+    fixture?: string;
+    body?: Body;
+    headers?: { [key: string]: string };
+    statusCode?: number;
+    forceNetworkError?: boolean;
+    throttleKbps?: number;
+    delay?: number;
+  }
+
   interface Chainable {
     dataCy(value: string): Chainable<Element>;
     login(): void;
@@ -23,5 +37,9 @@ declare namespace Cypress {
       menuItemOverrides: Partial<MenuItem>,
     ): Chainable<Omit<MenuItem, 'id'>>;
     expectItemCards(menuItemsResponse: { data: Array<Partial<MenuItem>> });
+    interceptGraphql(
+      graphqlParams: GraphqlParams,
+      response?: GraphqlResponseParams,
+    ): Chainable<null>;
   }
 }

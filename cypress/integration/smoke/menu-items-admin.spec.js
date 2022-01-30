@@ -15,10 +15,10 @@ describe('Menu Items Admin', () => {
     cy.dataCy('create-menu-item-button').click();
     cy.url().should('include', '/menu-items/create');
 
-    cy.intercept({ method: 'POST', url: '/v1/admin/menu-items' }).as(
+    cy.interceptGraphql({ operationName: 'CreateMenuItem' }).as(
       'createMenuItem',
     );
-    cy.intercept('/v1/admin/menu-items').as('getMenuItems');
+    cy.interceptGraphql({ operationName: 'MenuItemsList' }).as('getMenuItems');
 
     cy.dataCy('name-input').type(this.testMenuItem.name);
     cy.dataCy('description-input').type(this.testMenuItem.description);
@@ -33,7 +33,7 @@ describe('Menu Items Admin', () => {
     cy.wait('@createMenuItem')
       .its('response.body')
       .then((body) => {
-        cy.expectItemCard(body.id, this.testMenuItem);
+        cy.expectItemCard(body.data.createMenuItem.id, this.testMenuItem);
       });
   });
 
@@ -49,7 +49,9 @@ describe('Menu Items Admin', () => {
           });
 
           cy.url().should('include', `/menu-items/${id}`);
-          cy.intercept('/v1/admin/menu-items').as('getMenuItems');
+          cy.interceptGraphql({ operationName: 'MenuItemsList' }).as(
+            'getMenuItems',
+          );
 
           cy.dataCy('name-input').clear().type(this.testMenuItem.name);
           cy.dataCy('description-input')
@@ -80,7 +82,9 @@ describe('Menu Items Admin', () => {
         cy.dataCy('delete-button').click();
       });
       cy.url().should('include', `/menu-items/${id}/delete`);
-      cy.intercept('/v1/admin/menu-items').as('getMenuItems');
+      cy.interceptGraphql({ operationName: 'MenuItemsList' }).as(
+        'getMenuItems',
+      );
 
       cy.dataCy('delete-confirmation-dialog')
         .should('be.visible')
@@ -105,8 +109,9 @@ describe('Menu Items Admin', () => {
         cy.dataCy('edit-button').click();
       });
       cy.url().should('include', `/menu-items/${id}`);
-      cy.intercept('/v1/admin/menu-items').as('getMenuItems');
-
+      cy.interceptGraphql({ operationName: 'MenuItemsList' }).as(
+        'getMenuItems',
+      );
       cy.dataCy('is-active-checkbox').click();
       cy.dataCy('submit-button').click();
 
