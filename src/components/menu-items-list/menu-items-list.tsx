@@ -18,8 +18,9 @@ export const MenuItemsList = ({
   isAdminView,
   menuItemComponent: MenuItemComponent,
 }: MenuItemsListProps): JSX.Element => {
-  const { data, loading, error } = useMenuItemsList({ variables: { query } });
-  const menuItems = data?.getMenuItems.data ?? [];
+  const loading = false;
+  const error = null;
+  const menuItems = [];
 
   if (loading) {
     return (

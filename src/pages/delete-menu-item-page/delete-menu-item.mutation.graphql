@@ -1,3 +1,0 @@
-mutation DeleteMenuItem($id: Int!) {
-  deleteMenuItem(id: $id)
-}
