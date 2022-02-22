@@ -15,7 +15,6 @@ generates:
       - add:
           content:
             - '// 🛑 NOTICE: __generated__ folders should be added to .gitignore'
-            - '// 🛑 In this repo I keep generated files only for demo purposes!'
       - typescript-operations
       - typescript-react-apollo
     config:
