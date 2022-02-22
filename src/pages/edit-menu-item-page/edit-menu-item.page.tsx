@@ -1,5 +1,4 @@
 import { MenuItemModal } from 'components/menu-item-modal';
-import { MenuItemsListDocument } from 'components/menu-items-list/__generated__/menu-items-list.query';
 import {
   MenuItemDocument,
   useMenuItem,
@@ -18,7 +17,7 @@ export const EditMenuItemPage = () => {
   const [updateMenuItemMutation, { loading: isSubmitting }] = useUpdateMenuItem(
     {
       onCompleted: () => navigate('/'),
-      refetchQueries: [MenuItemsListDocument, MenuItemDocument],
+      refetchQueries: [MenuItemDocument],
     },
   );
   const handleCancel = useCallback(() => {

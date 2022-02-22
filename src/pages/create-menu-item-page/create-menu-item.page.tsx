@@ -1,5 +1,4 @@
 import { MenuItemModal } from 'components/menu-item-modal';
-import { MenuItemsListDocument } from 'components/menu-items-list/__generated__/menu-items-list.query';
 import { useCreateMenuItem } from 'pages/create-menu-item-page/__generated__/create-menu-item.mutation';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +14,6 @@ export const CreateMenuItemPage = () => {
   const navigate = useNavigate();
   const [createMenuItemMutation, { loading }] = useCreateMenuItem({
     onCompleted: () => navigate('/'),
-    refetchQueries: [MenuItemsListDocument],
   });
 
   const handleCancel = useCallback(() => {

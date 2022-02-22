@@ -5,7 +5,6 @@ import {
 } from 'components/menu-items-list/menu-items-list.styles';
 import { MenuItem } from 'types/menu-item.interface';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
-import { useMenuItemsList } from 'components/menu-items-list/__generated__/menu-items-list.query';
 
 interface MenuItemsListProps {
   query?: string;
@@ -20,7 +19,7 @@ export const MenuItemsList = ({
 }: MenuItemsListProps): JSX.Element => {
   const loading = false;
   const error = null;
-  const menuItems = [];
+  const menuItems: MenuItem[] = [];
 
   if (loading) {
     return (
